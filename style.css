@@ -9,6 +9,13 @@ body {
     flex-direction: column;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 95vw;
+    height: 95vh;
+}
+
 button {
     font-size: 2rem;
     background-color: rgb(129, 163, 152);
