@@ -37,8 +37,14 @@ input {
 }
 
 #submit {
-    width: 50%;
+    width: 45%;
     background-color: limegreen;
+}
+
+#get-link {
+    width: 45%;
+    background-color: burlywood;
+    font-size: 1.6rem;
 }
 
 p {

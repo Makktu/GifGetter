@@ -3,6 +3,7 @@
 function getCatGif(searchTerm) {
     console.log(searchTerm);
     msgArea.innerHTML = `<p>"${searchTerm}"</p>`;
+    getLinkBtn.innerText = 'COPY LINK';
 
     fetch(
         `https://api.giphy.com/v1/gifs/translate?api_key=cMKYPrx6cw6fB9UYB4vjPH4mCT5AgXFo&s=${searchTerm}`,
@@ -12,7 +13,8 @@ function getCatGif(searchTerm) {
             return response.json();
         })
         .then(function (response) {
-            img.src = response.data.images.original.url;
+            thisImage = response.data.images.original.url;
+            img.src = thisImage;
         })
         .catch(function (error) {
             console.log('nothing found for', searchTerm);
@@ -21,6 +23,8 @@ function getCatGif(searchTerm) {
 }
 
 let searchTerm = 'cats';
+
+let thisImage;
 
 const msgArea = document.querySelector('.messages');
 
@@ -40,6 +44,14 @@ submitBtn.addEventListener('click', () => {
 const refreshBtn = document.getElementById('refresh');
 refreshBtn.addEventListener('click', () => {
     getCatGif(searchTerm);
+});
+
+const getLinkBtn = document.getElementById('get-link');
+
+getLinkBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(thisImage);
+    getLinkBtn.innerText = '👍 COPIED!';
+    getLinkBtn.style = 'background-color: cyan;transition: 2s ease';
 });
 
 getCatGif(searchTerm);
