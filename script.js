@@ -1,25 +1,27 @@
 'use strict';
 
-function getCatGif(searchTerm) {
-    console.log(searchTerm);
+async function getCatGif(searchTerm) {
     msgArea.innerHTML = `<p>"${searchTerm}"</p>`;
     getLinkBtn.innerText = 'COPY LINK';
 
-    fetch(
-        `https://api.giphy.com/v1/gifs/translate?api_key=cMKYPrx6cw6fB9UYB4vjPH4mCT5AgXFo&s=${searchTerm}`,
-        { mode: 'cors' }
-    )
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (response) {
-            thisImage = response.data.images.original.url;
-            img.src = thisImage;
-        })
-        .catch(function (error) {
-            console.log('nothing found for', searchTerm);
-            getCatGif('error');
-        });
+    try {
+        const response = await fetch(
+            `https://api.giphy.com/v1/gifs/translate?api_key=cMKYPrx6cw6fB9UYB4vjPH4mCT5AgXFo&s=${searchTerm}`,
+            { mode: 'cors' }
+        );
+        const gifData = await response.json();
+        thisImage = gifData.data.images.original.url;
+        img.src = thisImage;
+    } catch (error) {
+        msgArea.innerHTML = `<p>${error}</p>`;
+        img.src =
+            'https://media4.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif?cid=f6fa26a6azn49z0iy7d5pd2wf84hgi348pn9wck0zwbcg6n9&rid=giphy.gif&ct=g';
+    }
+
+    // .catch(function (error) {
+    //     console.log('nothing found for', searchTerm);
+    //     getCatGif('error');
+    // });
 }
 
 let searchTerm = 'cats';
